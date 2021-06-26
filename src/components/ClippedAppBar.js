@@ -10,9 +10,14 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import HandIcon from '@material-ui/icons/PanTool';
 import MailIcon from '@material-ui/icons/Mail';
-import { green } from '@material-ui/core/colors';
+import HeartIcon from '@material-ui/icons/Favorite';
+import HistoryIcon from '@material-ui/icons/History';
+import SettingIcon from '@material-ui/icons/Settings';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import TodayIcon from '@material-ui/icons/Today';
+
 
 const drawerWidth = 240;
 
@@ -55,6 +60,7 @@ export default function ClippedDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
+
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -65,30 +71,35 @@ export default function ClippedDrawer(props) {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            {['빌립니다', '빌려드립니다'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+                <ListItemIcon>
+                  {/* {index === 0 ? <HandIcon /> : 
+                  (index === 1 ? <HeartIcon/> : null)} */}
+                  {index === 0 && <HandIcon />}
+                  {index === 1 && <HeartIcon/>}
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            {['History', 'Setting'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>
+                  {index === 0 && <HistoryIcon/>}
+                  {index === 1 && <SettingIcon/>}
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
         </div>
       </Drawer>
-      <main className={classes.content}>
-        <Toolbar />
-        <Typography paragraph>
-          
-        </Typography>
-      </main>
+
+    
     </div>
   );
 }

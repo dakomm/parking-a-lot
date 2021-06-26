@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import ClippedAppBar from "./components/ClippedAppBar";
-// import Main from "./components/main";
+import Main from "./components/main";
 
 import { withStyles } from "@material-ui/core";
 
@@ -8,6 +8,9 @@ const styles = theme => ({
   root:{
     width: "100%",
   },
+  main:{
+
+  }
 });
 
 export default function App() {
@@ -17,7 +20,7 @@ export default function App() {
   return (
     <div className="App">
       <ClippedAppBar/>
-      {/* <Main/> */}
+      <Main className="main"/>
       
     </div>
   );
