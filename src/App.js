@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import ClippedAppBar from "./components/ClippedAppBar";
+import TopAppBar from "./components/TopAppBar";
 import Main from "./components/main";
 
 import { withStyles } from "@material-ui/core";
@@ -19,7 +20,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <ClippedAppBar/>
+      <TopAppBar/>
       <Main className="main"/>
       
     </div>
