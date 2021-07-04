@@ -25,54 +25,49 @@ const CalendarAnt = () => {
 
     const changeDate = (value)=>{   //onSelect
         setDate(value);
-        // selectedDate: value;
         // 2017-01-25처럼 표시 : selectedValue && selectedValue.format('YYYY-MM-DD')
     }
     
     function dateCellRender(value) {
         const listData = getListData(value);
-        //console.log('listData.date :',listData.date );
-        //console.log('value.format() :',value.format('YYYY-MM-DD') );
-        if( listData.date === value.format('YYYY-MM-DD') ){
-            return (
-                <ul /*className="events"*/>
-                    {listData.map(item => (
-                        <li key={item.event}>
-                            <Badge status={'success'} />
-                        </li> 
-                    ))}
-                </ul>
-            )
-            // setBadgeType('success');    // 초기화하는 로직 추가 필요
-            // cardLeft = true;
-        } else { return null; }
-       
+        for(let i=0; i<listData.length; i++){
+            if( listData[i].date === value.format('YYYY-MM-DD') ){
+                if(listData[i].getter === ''){
+                    return <Button type="primary" shape="round" size="small">
+                            {listData[i].giver}</Button> 
+                }
+                else{ return <Button type="dashed" shape="round" size="small" disabled>
+                            {listData[i].giver}→{listData[i].getter}</Button>};
+                // if 화면 size small -> return (<Badge status={'success'}/>) ;
+                // setBadgeType('success');    // 초기화하는 로직 추가 필요
+                // cardLeft = true;
+            } 
+        }
+        return;
       };
 
       const getListData = (value) => {
         let listData;
-        
         listData = [
-            {date: '2021-07-21', giver: 'DK', getter: 'god'},
-            {date: '2021-07-01', giver: 'AA', getter: 'BBB'},
+            {id:'0', date: '2021-07-21', giver: 'DK', getter: ''},
+            {id:'1', date: '2021-07-01', giver: 'AA', getter: 'BBB'},
         ];
-        //console.log('listdata',listData);
-        <List
-            className="getListData"
-            // loading={initLoading}
-            itemLayout="horizontal"
-            bordered
-            // loadMore={loadMore}
-            dataSource={listData}
-            renderItem={item => 
+        // <List
+        //     className="getListData"
+        //     // loading={initLoading}
+        //     itemLayout="horizontal"
+        //     bordered
+        //     // loadMore={loadMore}
+        //     dataSource={listData}
+        //     renderItem={item => 
                 
                 
-                <List.Item actions={[<a key="give">Give</a>, <a key="get">Get</a>]}>
-                   {/* <List.Item.Meta title={<a>{item.giver}</a>}/> */}
-                   {item}
-                </List.Item>
-            }
-        />
+        //         <List.Item actions={[<a key="give">Give</a>, <a key="get">Get</a>]}>
+        //            {/* <List.Item.Meta title={<a>{item.giver}</a>}/> */}
+        //            {item}
+        //         </List.Item>
+        //     }
+        // />
         return (listData || []);
       }
 
@@ -167,28 +162,3 @@ const CalendarAnt = () => {
 }
 
 export default (CalendarAnt);
-
-// const CalendarAnt = () => {
-//     const classes = useStyles();
-//     const [date, setDate] = useState('2021-07-01');
-
-//     useEffect(() => {
-    
-//     },[]);
-
-//     const changeDate = (value)=>{
-//         setDate(value);
-//     }
-//     const idn = (value)=>{
-//         console.log("panel change!");
-//         console.log(value);
-//         setDate(value);
-//     }
-
-//     return(
-//       <Calendar value={moment(date)} onSelect={changeDate} onPanelChange={idn}/>
-//     )
-
-// }
-
-// export default (CalendarAnt);
