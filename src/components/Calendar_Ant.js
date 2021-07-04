@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { makeStyles, fade, rgbToHex } from '@material-ui/core/styles';
 import { Calendar, Alert, List, Layout, Select, Radio, Col, Row, Typography, Button, Badge} from 'antd';
 import moment from 'moment';
+import 'moment/locale/ko';
 import './Calendar_Ant.css'
 import 'antd/dist/antd.css';
 
@@ -22,7 +23,7 @@ const CalendarAnt = () => {
     
     },[]);
 
-    const changeDate = (value)=>{
+    const changeDate = (value)=>{   //onSelect
         setDate(value);
         // selectedDate: value;
         // 2017-01-25처럼 표시 : selectedValue && selectedValue.format('YYYY-MM-DD')
@@ -55,7 +56,7 @@ const CalendarAnt = () => {
             {date: '2021-07-21', giver: 'DK', getter: 'god'},
             {date: '2021-07-01', giver: 'AA', getter: 'BBB'},
         ];
-        console.log('listdata',listData);
+        //console.log('listdata',listData);
         <List
             className="getListData"
             // loading={initLoading}
@@ -109,6 +110,7 @@ const CalendarAnt = () => {
                 </Select.Option>,
               );
             }
+            
             return (
               <div style={{ padding: 8 }}>
                 <Row gutter={8}>    {/* Year, Month Row의 Padding값(px) */}
@@ -141,11 +143,10 @@ const CalendarAnt = () => {
                     </Select>
                   </Col>
                   <Col>
-                    <Button 
+                    <Button ghost
                         type="primary" 
-                        ghost
                         size="small"
-                        // onClick={} // selectable calendar 참고
+                        onClick={()=>{changeDate(moment());}} // selectable calendar 참고
                     >
                         Today
                     </Button>
