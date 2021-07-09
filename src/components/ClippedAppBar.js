@@ -73,10 +73,10 @@ export default function ClippedDrawer(props) {
           <List>
             {['빌립니다', '빌려드립니다'].map((text, index) => (
               <ListItem button key={text}>
-                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+                {/* // <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>  */}
                 <ListItemIcon>
-                  {/* {index === 0 ? <HandIcon /> : 
-                  (index === 1 ? <HeartIcon/> : null)} */}
+                  {/* // {index === 0 ? <HandIcon /> : 
+                  // (index === 1 ? <HeartIcon/> : null)}  */}
                   {index === 0 && <HandIcon />}
                   {index === 1 && <HeartIcon/>}
                 </ListItemIcon>

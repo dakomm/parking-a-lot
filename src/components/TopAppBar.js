@@ -11,13 +11,18 @@ import { green } from '@material-ui/core/colors';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: green,
+  },
+  AppBar: {
+    backgroundColor : "green",
   },
   menuButton: {
+    color: '#ffb10a',
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
+    color: '#ffb10a',
+    fontWeight: 'bold',
   },
 }));
 
@@ -44,8 +49,8 @@ export default function TopnAppBar(props) {
 
 return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" className={classes.AppBar}>
+        <Toolbar >
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>

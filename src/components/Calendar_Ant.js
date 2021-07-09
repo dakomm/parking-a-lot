@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import { makeStyles, fade, rgbToHex } from '@material-ui/core/styles';
-import { Calendar, Alert, List, Layout, Select, Radio, Col, Row, Typography, Button, Badge} from 'antd';
+import { Calendar, Alert, List, Layout, Divider, Space, Select, Radio, Col, Row, Typography, Button, Badge, Popover} from 'antd';
 import moment from 'moment';
 import 'moment/locale/ko';
 import './Calendar_Ant.css'
@@ -9,23 +9,50 @@ import 'antd/dist/antd.css';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-    }
+    },
+    
 }));
 
 
 const CalendarAnt = () => {
     const classes = useStyles();
     const [date, setDate] = useState(moment());
-    const [event, setEvent] = useState('');
-    const [badgeType, setBadgeType] = useState('');
+    const [clicked, setClicked] = useState(false);
+    const [hovered, setHovered] = useState(false);
 
     useEffect(() => {
     
     },[]);
 
-    const changeDate = (value)=>{   //onSelect
-        setDate(value);
-        // 2017-01-25처럼 표시 : selectedValue && selectedValue.format('YYYY-MM-DD')
+    const onSelect = (value)=>{   //onSelect
+        setDate(value);  // 2017-01-25처럼 표시 : selectedValue && selectedValue.format('YYYY-MM-DD')
+        //TODO:날짜클릭 시 주기 등록 & 자세히 선택창
+        // return <Popover
+        //     content={
+        //         // <div>
+        //         //     "선택하세오"<br/><br/>
+        //             <Space split={<Divider type="vertical" />}>
+        //                 <Button className="ggButton" shape="round">주기</Button>
+        //                 <Button className="ggButton" shape="round">자세히</Button>
+        //             </Space>
+        //         // </div>
+        //     }
+        //     title={value && value.format('YYYY-MM-DD')}
+        //     trigger="click"
+        //     visible={clicked}
+        //     onVisibleChange={handleClickChange}
+        // >
+        // <td/>
+        //  </Popover>
+    }
+    const handleHoverChange = (visible) => {
+        setHovered(visible);
+        setClicked(false);
+    }
+
+    const handleClickChange = visible => {
+        setHovered(false);
+        setClicked(visible);
     }
     
     function dateCellRender(value) {
@@ -33,8 +60,31 @@ const CalendarAnt = () => {
         for(let i=0; i<listData.length; i++){
             if( listData[i].date === value.format('YYYY-MM-DD') ){
                 if(listData[i].getter === ''){
-                    return <Button type="primary" shape="round" size="small">
-                            {listData[i].giver}</Button> 
+                    let onClickMsg = "From : " + listData[i].giver;
+                    return  <Popover 
+                                content={listData[i].giver} 
+                                trigger="hover" 
+                                visible={hovered} 
+                                onVisibleChange={handleHoverChange}
+                            >
+                                <Popover
+                                    content={
+                                        // <div>
+                                        // "선택하세오"<br/><br/>
+                                        <Space split={<Divider type="vertical" />}>
+                                        <Button shape="round">주기</Button>
+                                        <Button shape="round">받기</Button>
+                                        </Space>
+                                        // </div>
+                                    }
+                                    title={onClickMsg}
+                                    trigger="click"
+                                    visible={clicked}
+                                    onVisibleChange={handleClickChange}
+                                >
+                                    <Button type="primary" shape="round" size="small">{listData[i].giver}</Button> 
+                                </Popover>
+                            </Popover>
                 }
                 else{ return <Button type="dashed" shape="round" size="small" disabled>
                             {listData[i].giver}→{listData[i].getter}</Button>};
@@ -141,7 +191,7 @@ const CalendarAnt = () => {
                     <Button ghost
                         type="primary" 
                         size="small"
-                        onClick={()=>{changeDate(moment());}} // selectable calendar 참고
+                        onClick={()=>{setDate(moment());}} // selectable calendar 참고
                     >
                         Today
                     </Button>
@@ -152,7 +202,7 @@ const CalendarAnt = () => {
           }}
           
           value={moment(date)} 
-          onSelect={changeDate}
+          onSelect={onSelect}
           dateCellRender={dateCellRender}
 
         />
