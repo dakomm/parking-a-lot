@@ -10,7 +10,14 @@
     [data-theme="dark"] .site-calendar-customize-header-wrapper {
       border: 1px solid #303030;
     }
-
+.ant-popover-inner-content{
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+/* .ant-popover-title{ 
+  pointer-events:none;
+} */
 .ant-picker-calendar {
     box-sizing: border-box;
     margin: 0;
