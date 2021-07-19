@@ -70,56 +70,49 @@ const CalendarAnt = () => {
     return listData.filter((e => e.date === date));
   }
 
-  function dateCellRender(value) {
-    // const listData = getListData(value);
+  const buttonType = (listDataElement) => {
+    if(listDataElement.getter === ''){
+      let onHoverMsg = "From : " + listDataElement.giver;
+      let GiveOrGet = '받기';
+      return(
+        <Popover 
+          title={onHoverMsg}  
+          content={<Grid container direction="column" alignItems="center">
+            <Button shape="round" onClick={()=>{setDialogOpen(true);handleMatch(listDataElement.id);}}>{GiveOrGet}</Button>
+          </Grid>}
+          overlayStyle={{width: "120px"}}
+        >
+          <Button type="primary" shape="round" size="small" style={{margin:3}}>{listDataElement.giver}</Button>
+        </Popover>
+      )
+    } else if(listDataElement.giver === ''){
+      let onHoverMsg = "To : " + listDataElement.getter;
+      let GiveOrGet = '주기';
+      return(
+        <Popover 
+          title={onHoverMsg}  
+          content={<Grid container direction="column" alignItems="center">
+            <Button shape="round" onClick={()=>{setDialogOpen(true);handleMatch(listDataElement.id);}}>{GiveOrGet}</Button>
+          </Grid>}
+          overlayStyle={{width: "120px"}}
+        >
+          <Button type="primary" shape="round" size="small" danger style={{margin:3}}>{listDataElement.getter}</Button>
+        </Popover>
+      )
+    } else{return(
+      <Button type="dashed" shape="round" size="small" disabled style={{margin:3}}>{listDataElement.giver}→{listDataElement.getter}</Button>
+    )}
+  }
 
-    //TODO: 한 셀에 여러 버튼 생성 시 맨처음 한개만 생성되는 문제 해결
-    let onHoverMsg = ''
-    let GiveOrGet = ''
-    let buttonType = ''
+  function dateCellRender(value) {
 
     for(let i=0; i<listData.length; i++){
-      
       if( listData[i].date === value.format('YYYY-MM-DD')){
-        
-        if(listData[i].getter === ''){
-          onHoverMsg = "From : " + listData[i].giver;
-          GiveOrGet = '받기';
-          buttonType = <Button type="primary" shape="round" size="small" style={{margin:3}}>{listData[i].giver}</Button>;
-        }
-        else if(listData[i].giver === ''){
-          onHoverMsg = "To : " + listData[i].getter;
-          GiveOrGet = '주기';
-          buttonType = <Button type="primary" shape="round" size="small" danger style={{margin:3}}>{listData[i].getter}</Button>;
-          // return<Popover 
-          //         // style={{pointerEvents: "none", cursor: "none"}}
-          //         title={onHoverMsg}  
-          //         content={<Grid container direction="column" alignItems="center">
-          //           <Button shape="round" onClick={()=>{setDialogOpen(true); handleMatch(listData[i].id);}}>{GiveOrGet}</Button>
-          //         </Grid>}
-          //         overlayStyle={{width: "120px"}}
-          //       >
-          //         {buttonType}
-          //       </Popover>
-        }
-        else{ 
-          buttonType = <Button type="dashed" shape="round" size="small" disabled style={{margin:3}}>
-                        {listData[i].giver}→{listData[i].getter}</Button>};
-
-        return(<ul style={{listStyle:"none", paddingLeft:"0px"}}>{dateFilteredList(listData[i].date).map(item => (
-          <li key={item.id}>
-            <Popover 
-              title={onHoverMsg}  
-              content={<Grid container direction="column" alignItems="center">
-                <Button shape="round" onClick={()=>{setDialogOpen(true);handleMatch(listData[i].id);}}>{GiveOrGet}</Button>
-              </Grid>}
-              overlayStyle={{width: "120px"}}
-            >
-              {buttonType}
-            </Popover>
-          </li>))}
-        </ul>)
-
+        return(
+        <ul style={{listStyle:"none", paddingLeft:"0px"}}>
+          {dateFilteredList(listData[i].date).map(item =>(<li key={item.id}>{buttonType(item)}</li>))}
+        </ul>
+        )
       } 
     }
     return;
@@ -131,20 +124,6 @@ const CalendarAnt = () => {
       {id:'0', date: '2021-07-21', giver: 'DK', getter: ''},
       {id:'1', date: '2021-07-01', giver: 'AA', getter: 'BBB'},
     ];
-    // <List
-    //     className="getListData"
-    //     // loading={initLoading}
-    //     itemLayout="horizontal"
-    //     bordered
-    //     // loadMore={loadMore}
-    //     dataSource={listData}
-    //     renderItem={item => 
-    //         <List.Item actions={[<a key="give">Give</a>, <a key="get">Get</a>]}>
-    //            {/* <List.Item.Meta title={<a>{item.giver}</a>}/> */}
-    //            {item}
-    //         </List.Item>
-    //     }
-    // />
     return (listData || []);
     }
 
