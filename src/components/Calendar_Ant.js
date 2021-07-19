@@ -6,14 +6,12 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import './Calendar_Ant.css'
 import 'antd/dist/antd.css';
-import userEvent from "@testing-library/user-event";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
 }));
-
 
 const CalendarAnt = () => {
   const classes = useStyles();
