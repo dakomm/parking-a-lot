@@ -32,13 +32,36 @@ const useStyles = makeStyles((theme) => ({
 
 const TopAppBar = () => {
   const classes = useStyles();
-  const [user, setUser] = useState('김다경');
+  const [user, setUser] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userID, setUserID] = useState('');
   const [logIO, setLogIO] = useState('log in');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const logInButtonClick = () => {
-    
+  const logInButton = () => {
+    if(logIO === 'log in') setIsModalVisible(true);
+    else {
+      setLogIO('log in');
+      setUser(''); 
+      setUserName('');
+      setUserID('');
+    }
   }
+  const modalLogInButton = (e) => {
+    // if(){  //TODO: userID, name verify!
+    // }
+    setUser(userName);
+    setIsModalVisible(false);
+    setLogIO('log out');
+  }
+
+  const onNameChange = (e) => {
+    setUserName(e.target.value)
+  }
+  const onIDChange = (e) => {
+    setUserID(e.target.value)
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.AppBar}>
@@ -49,25 +72,25 @@ const TopAppBar = () => {
           <Typography variant="h6" className={classes.title}>
           PARKING a LOT
           </Typography>
-          <Button color="inherit">{user} 님</Button>
-          <Button variant="outlined" className={classes.logInButton} onClick={()=>{setIsModalVisible(true)}}>{logIO}</Button>
+          <Button color="inherit">{user}</Button>
+          <Button variant="outlined" className={classes.logInButton} onClick={()=>{logInButton()}}>{logIO}</Button>
         </Toolbar>
       </AppBar>
 
       <Modal 
-        visible={isModalVisible} 
+        visible={isModalVisible & (logIO === 'log in')} 
         onCancel={() => {setIsModalVisible(false);}}
         width={'250px'}
         closable
         footer={[
-          <Button type="primary" >
+          <Button type="primary" onClick={()=>{modalLogInButton()}}>
             Log In
           </Button>
           ]}
       >
         <Space direction="vertical"><br/>
-          <Input placeholder="이름" prefix={<UserOutlined/>} allowClear/>
-          <Input.Password placeholder="사번" prefix={<UserOutlined/>} allowClear/>
+          <Input placeholder="이름" onChange={onNameChange}prefix={<UserOutlined/>} allowClear/>
+          <Input.Password placeholder="사번" onChange={onIDChange} onPressEnter={()=>{modalLogInButton()}} prefix={<UserOutlined/>} allowClear/>
         </Space>
       </Modal>
     </div>
