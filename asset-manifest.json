@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/parking-a-lot/static/css/main.1686ae1b.chunk.css",
+    "main.js": "/parking-a-lot/static/js/main.137eb34d.chunk.js",
+    "main.js.map": "/parking-a-lot/static/js/main.137eb34d.chunk.js.map",
+    "runtime-main.js": "/parking-a-lot/static/js/runtime-main.bfc3d77e.js",
+    "runtime-main.js.map": "/parking-a-lot/static/js/runtime-main.bfc3d77e.js.map",
+    "static/css/2.ffe01b8f.chunk.css": "/parking-a-lot/static/css/2.ffe01b8f.chunk.css",
+    "static/js/2.12a3c44e.chunk.js": "/parking-a-lot/static/js/2.12a3c44e.chunk.js",
+    "static/js/2.12a3c44e.chunk.js.map": "/parking-a-lot/static/js/2.12a3c44e.chunk.js.map",
+    "static/js/3.a678e633.chunk.js": "/parking-a-lot/static/js/3.a678e633.chunk.js",
+    "static/js/3.a678e633.chunk.js.map": "/parking-a-lot/static/js/3.a678e633.chunk.js.map",
+    "index.html": "/parking-a-lot/index.html",
+    "static/css/2.ffe01b8f.chunk.css.map": "/parking-a-lot/static/css/2.ffe01b8f.chunk.css.map",
+    "static/css/main.1686ae1b.chunk.css.map": "/parking-a-lot/static/css/main.1686ae1b.chunk.css.map",
+    "static/js/2.12a3c44e.chunk.js.LICENSE.txt": "/parking-a-lot/static/js/2.12a3c44e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bfc3d77e.js",
+    "static/css/2.ffe01b8f.chunk.css",
+    "static/js/2.12a3c44e.chunk.js",
+    "static/css/main.1686ae1b.chunk.css",
+    "static/js/main.137eb34d.chunk.js"
+  ]
+}
