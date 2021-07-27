@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography, Button, IconButton, } from '@material-ui/c
 import MenuIcon from '@material-ui/icons/Menu';
 import { green } from '@material-ui/core/colors';
 import { Modal, Input, Alert, Divider, Space, Select, Col, Row, message} from 'antd';
-import { UserOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { UserOutlined, CarFilled, EyeInvisibleOutlined } from '@ant-design/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +67,7 @@ const TopAppBar = () => {
       <AppBar position="static" className={classes.AppBar}>
         <Toolbar >
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            <MenuIcon /><CarFilled />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
           PARKING a LOT
@@ -89,7 +89,7 @@ const TopAppBar = () => {
           ]}
       >
         <Space direction="vertical"><br/>
-          <Input placeholder="이름" onChange={onNameChange}prefix={<UserOutlined/>} allowClear/>
+          <Input placeholder="이름" onChange={onNameChange} prefix={<UserOutlined/>} allowClear/>
           <Input.Password placeholder="사번" onChange={onIDChange} onPressEnter={()=>{modalLogInButton()}} prefix={<UserOutlined/>} allowClear/>
         </Space>
       </Modal>

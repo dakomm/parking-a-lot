@@ -1,5 +1,4 @@
 import React, { Component, useEffect, useState } from "react";
-import ClippedAppBar from "./components/ClippedAppBar";
 import TopAppBar from "./components/TopAppBar";
 import Main from "./components/main";
 
