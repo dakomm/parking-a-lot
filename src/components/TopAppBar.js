@@ -1,10 +1,18 @@
 import React,{ useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, IconButton, } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import { green } from '@material-ui/core/colors';
-import { Modal, Input, Alert, Divider, Space, Select, Col, Row, message} from 'antd';
-import { UserOutlined, CarFilled, EyeInvisibleOutlined } from '@ant-design/icons';
+import { AppBar, Toolbar, Typography, Button, IconButton, Snackbar, Grid, Slide } from '@material-ui/core';
+import { Menu } from '@material-ui/icons';
+import MuiAlert from '@material-ui/lab/Alert';
+// import { green } from '@material-ui/core/colors';
+import { Modal, Input, Divider, Space, Select, Col, Row, message} from 'antd';
+import { UserOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+function SlideTransition(props) {
+  return <Slide {...props} direction="down"/>;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,23 +44,46 @@ const TopAppBar = () => {
   const [userName, setUserName] = useState('');
   const [userID, setUserID] = useState('');
   const [logIO, setLogIO] = useState('log in');
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLogInModalVisible, setIsLogInModalVisible] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openFailSnackbar, setOpenFailSnackbar] = useState(false);
+  const [snackbarContent, setSnackbarContent] = useState('');
+  const [isOpenHistory, setIsOpenHistory] = useState(false);
+
+  // let baseUrl = "http://localhost:8000"
 
   const logInButton = () => {
-    if(logIO === 'log in') setIsModalVisible(true);
-    else {
+    if(logIO === 'log in') setIsLogInModalVisible(true);
+    if(logIO === 'log out') {
       setLogIO('log in');
       setUser(''); 
-      setUserName('');
       setUserID('');
+      // store.dispatch({
+      //   type: 'changeuser',
+      //   user: '',
+      // });
+      setOpenSnackbar(true);
+      setTimeout(()=>{setOpenSnackbar(false)},1800);
+      setSnackbarContent('Logged Out!');  
     }
   }
-  const modalLogInButton = (e) => {
-    // if(){  //TODO: userID, name verify!
+  const modalLogInButton = async () => {  // 로그인 창에서 login 버튼 클릭 시
+    // var chkUserResult = await ChkUserInfo(userID) // user 이름 또는 false 리턴
+    // if(chkUserResult !== false){  // user 정보 일치 시
+      // store.dispatch({
+      //   type: 'changeuser',
+      //   user: chkUserResult,
+      // });
+      setIsLogInModalVisible(false);
+      setLogIO('log out');
+      // setSnackbarContent(chkUserResult+'님, Welcome!');  
+      setOpenSnackbar(true);
+      setTimeout(()=>{setOpenSnackbar(false)},1800);
+    // }else{                        // user 정보 불일치 시
+    //   setOpenFailSnackbar(true);
+    //   setTimeout(()=>{setOpenFailSnackbar(false)},6000);
+    //   console.log("failed",chkUserResult, userID)
     // }
-    setUser(userName);
-    setIsModalVisible(false);
-    setLogIO('log out');
   }
 
   const onNameChange = (e) => {
@@ -62,12 +93,24 @@ const TopAppBar = () => {
     setUserID(e.target.value)
   }
 
+  // const ChkUserInfo = async (id) => {
+  //   const dbResult = await axios.post(baseUrl+'/api/membersinfo/chkuserinfo',
+  //   {id: id}
+  //   );
+  //   console.log(dbResult.data)
+  //   if(dbResult.data !== false){    // user 정보 일치 시
+  //     return dbResult.data;
+  //   }else{
+  //     return false;
+  //   }
+  // }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.AppBar}>
         <Toolbar >
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon /><CarFilled />
+            <Menu />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
           PARKING a LOT
@@ -78,21 +121,28 @@ const TopAppBar = () => {
       </AppBar>
 
       <Modal 
-        visible={isModalVisible & (logIO === 'log in')} 
-        onCancel={() => {setIsModalVisible(false);}}
+        visible={isLogInModalVisible & (logIO === 'log in')} 
+        onCancel={() => {setIsLogInModalVisible(false);}}
         width={'250px'}
         closable
         footer={[
-          <Button type="primary" onClick={()=>{modalLogInButton()}}>
-            Log In
-          </Button>
+          <Grid container direction="column" alignItems="center">
+            <Button type="primary" autoFocus onClick={()=>{modalLogInButton()}}>Log In</Button>
+          </Grid>
           ]}
       >
         <Space direction="vertical"><br/>
-          <Input placeholder="이름" onChange={onNameChange} prefix={<UserOutlined/>} allowClear/>
-          <Input.Password placeholder="사번" onChange={onIDChange} onPressEnter={()=>{modalLogInButton()}} prefix={<UserOutlined/>} allowClear/>
+          <Input placeholder="이름" value={userName} onChange={onNameChange} prefix={<UserOutlined/>} required allowClear/>
+          <Input.Password placeholder="사번" value={userID} onChange={onIDChange} onPressEnter={()=>{modalLogInButton()}} prefix={<UserOutlined/>} required allowClear/>
         </Space>
       </Modal>
+
+      <Snackbar open={openSnackbar}>
+        <Alert severity="success" TransitionComponent={SlideTransition}>{snackbarContent}</Alert>
+      </Snackbar>
+      <Snackbar open={openFailSnackbar}>
+        <Alert severity="success" TransitionComponent={SlideTransition}>Log In Failed : 입력 정보를 확인하세요. 문의:김다경 연구</Alert>
+      </Snackbar>
     </div>
   );
 }

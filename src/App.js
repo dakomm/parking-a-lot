@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import TopAppBar from "./components/TopAppBar";
-import Main from "./components/main";
+import CalendarAnt from "./components/Calendar_Ant";
 
 import { withStyles } from "@material-ui/core";
 
@@ -8,9 +8,6 @@ const styles = theme => ({
   root:{
     width: "100%",
   },
-  main:{
-
-  }
 });
 
 export default function App() {
@@ -20,7 +17,7 @@ export default function App() {
   return (
     <div className="App">
       <TopAppBar/>
-      <Main className="main"/>
+      <CalendarAnt/>
       
     </div>
   );

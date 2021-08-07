@@ -6,6 +6,7 @@
     "@date-io/date-fns": "^2.10.11",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
     "@material-ui/pickers": "^3.3.10",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -15,6 +16,7 @@
     "gh-pages": "^3.2.3",
     "moment": "^2.29.1",
     "react": "^17.0.2",
+    "react-app-polyfill": "^2.0.0",
     "react-big-calendar": "^0.33.5",
     "react-calendar": "^3.4.0",
     "react-dom": "^17.0.2",
@@ -47,7 +49,8 @@
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      "IE 11"
     ]
   },
   "homepage": "https://dakomm.github.io/parking-a-lot/"
