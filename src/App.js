@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
-import TopAppBar from "./components/TopAppBar";
-import CalendarAnt from "./components/Calendar_Ant";
+import TopAppBar from "components/TopAppBar";
+import CalendarAnt from "components/Calendar_Ant";
 
 import { withStyles } from "@material-ui/core";
 

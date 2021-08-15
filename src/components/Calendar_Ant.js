@@ -283,4 +283,4 @@ const CalendarAnt = () => {
   )
 }
 
-export default (CalendarAnt);
+export default CalendarAnt;
