@@ -1,9 +1,9 @@
 import React,{ useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import store from 'store';
 import { AppBar, Toolbar, Typography, Button, IconButton, Snackbar, Grid, Slide } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import MuiAlert from '@material-ui/lab/Alert';
-// import { green } from '@material-ui/core/colors';
 import { Modal, Input, Radio, Divider, Space, Select, Col, Row, message} from 'antd';
 import { Button as ButtonA } from 'antd';
 import { UserOutlined, EyeInvisibleOutlined, GoogleOutlined } from '@ant-design/icons';
@@ -70,6 +70,10 @@ const TopAppBar = () => {
           displayName: user.displayName,
           uid: user.uid,
         })
+        store.dispatch({
+          type: 'changeuser',
+          user: user.displayName,
+        });
       } else{
         setIsLoggedIn(false);
         setUserObj(null);
@@ -84,6 +88,10 @@ const TopAppBar = () => {
       displayName: user.displayName,
       uid: user.uid,
     });
+    store.dispatch({
+      type: 'changeuser',
+      user: user.displayName,
+    });
   };
 
   const onLogInButton = () => {
@@ -91,10 +99,10 @@ const TopAppBar = () => {
       // setUser(''); 
       setUserID('');
       authService.signOut();
-      // store.dispatch({
-      //   type: 'changeuser',
-      //   user: '',
-      // });
+      store.dispatch({
+        type: 'changeuser',
+        user: '',
+      });
       setIsLogInModalVisible(false);
       setSnackbarContent('Logged Out!'); 
       setOpenSnackbar(true);
@@ -111,38 +119,33 @@ const TopAppBar = () => {
         if(isNewAccount & userName !== null){
           await authService.currentUser.updateProfile({displayName: userName,});
         }
-        setIsLogInModalVisible(false);
-        setSnackbarContent(authService.currentUser.displayName+'님, Welcome!');  
-        setOpenSnackbar(true);
-        setTimeout(()=>{setOpenSnackbar(false)},1800);
       } else if(e === 'email'){
-          if(isNewAccount){
-            if(userName !== null){
-              await authService.createUserWithEmailAndPassword(email, password);
-              await authService.currentUser.updateProfile({displayName: userName,});
-            }
+          if(isNewAccount & userName !== null){
+            await authService.createUserWithEmailAndPassword(email, password);
+            await authService.currentUser.updateProfile({displayName: userName,});
+          
           } else{
             await authService.signInWithEmailAndPassword(email, password);
+          }
           // var chkUserResult = await ChkUserInfo(userID) // user 이름 또는 false 리턴
           // if(chkUserResult !== false){  // user 정보 일치 시
             // store.dispatch({
             //   type: 'changeuser',
             //   user: chkUserResult,
             // });
-            setIsLogInModalVisible(false);
-            setSnackbarContent(authService.currentUser.displayName+'님, Welcome!');  
-            setOpenSnackbar(true);
-            setTimeout(()=>{setOpenSnackbar(false)},1800);
           // }else{                        // user 정보 불일치 시
           //   setopenErrSnackbar(true);
           //   setErrSnackbarContent('Log In Failed : 입력 정보를 확인하세요. 문의:김다경 연구');
           //   setTimeout(()=>{setopenErrSnackbar(false)},6000);
           //   console.log("failed",chkUserResult, userID)
           // }
-        } 
       }
       refreshUser();
       setIsLoggedIn(true);
+      setIsLogInModalVisible(false);
+      setSnackbarContent(authService.currentUser.displayName+'님, Welcome!');  
+      setOpenSnackbar(true);
+      setTimeout(()=>{setOpenSnackbar(false)},1800);
     }catch(error){
       setOpenErrSnackbar(true)
       setErrSnackbarContent(error.message); 
@@ -154,17 +157,13 @@ const TopAppBar = () => {
     const {target: {name, value}} = e
     if(name === "eMail"){
       setEmail(value);
-      // setUserName(value);
     } else if(name === "password"){
       setPassword(value);
-      // setUserID(value);
     } else if(name === "userName"){
       setUserName(value);
     }
   }
-
   const toggleModalLoginButton = () => setIsNewAccount((prev) => !prev);
-
 
   // const ChkUserInfo = async (id) => {
   //   const dbResult = await axios.post(baseUrl+'/api/membersinfo/chkuserinfo',
@@ -180,13 +179,12 @@ const TopAppBar = () => {
   const radioOptions = [
     {label: 'Google', value: 'Google'},
     {label: 'E-Mail', value: 'eMail'},
-    // {label: '회원가입', value: 'SignUp'},
   ];
 
   const LogInModalContent = () => {
     if(radioValue === 'Google'){return(
       <Grid container direction="column" alignItems="center">
-        {isNewAccount? <Input placeholder="이름" value={userName} name="userName" onChange={onInputChange}required allowClear/> : null }
+        {isNewAccount? <Input placeholder="이름" value={userName} name="userName" onChange={onInputChange}required allowClear/> : null }<br/>
         <ButtonA name="google" onClick={()=>{onModalLogInButton('google')}} size="large" type="primary">{isNewAccount ? "Google로 회원가입" : "Google Log in"}</ButtonA>
       </Grid>
     )} else if(radioValue === 'eMail'){return(
